@@ -39,7 +39,18 @@ namespace GoatRock
         {
             base.UpdateAudioVisualization();
 
-            float bandDataMultiplier = ReferenceAudioReactSource.GetBandData(Settings.BandNumber);
+            float bandDataMultiplier = 0f;
+            if(ReferenceAudioReactSource == null)
+            {
+                if(ReferenceAudioReactSourceMic != null)
+                {
+                    bandDataMultiplier = ReferenceAudioReactSourceMic.GetBandData(Settings.BandNumber);
+                }
+            }
+            else
+            {
+                bandDataMultiplier = ReferenceAudioReactSource.GetBandData(Settings.BandNumber);
+            }
 
             ScaleTarget.localScale = new Vector3(
                 ReturnTargetScale(Settings.ScaleX, initialScale.x, bandDataMultiplier, Settings.IntensityMultiplier, MaxScale),

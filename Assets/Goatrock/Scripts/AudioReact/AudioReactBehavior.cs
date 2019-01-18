@@ -9,7 +9,9 @@ namespace GoatRock
         public bool VisualizationBehavior = false; // Is the visualization enabled?
         public bool SetupOnStart = true;
         public bool StartOnStart = true;
+        [Space(5)]
         public AudioReactSourceBehavior ReferenceAudioReactSource; // What's the source of the visualization?
+        public AudioReactMicSourceBehavior ReferenceAudioReactSourceMic; // What's the source of the visualization?
 
         protected bool Ready = false; // Has lazy loading been completed?
 
@@ -62,6 +64,7 @@ namespace GoatRock
                 try
                 {
                     ReferenceAudioReactSource = GetComponent<AudioReactSourceBehavior>();
+                    ReferenceAudioReactSourceMic = GetComponent<AudioReactMicSourceBehavior>();
                 }
                 catch
                 {
@@ -69,6 +72,7 @@ namespace GoatRock
                 }
             }
             ReferenceAudioReactSource = GetComponent<AudioReactSourceBehavior>();
+            ReferenceAudioReactSourceMic = GetComponent<AudioReactMicSourceBehavior>();
         }
 
         /// <summary>
