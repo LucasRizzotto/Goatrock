@@ -1154,6 +1154,7 @@ GameObject:
   - component: {fileID: 1694313377}
   - component: {fileID: 1694313378}
   - component: {fileID: 1694313379}
+  - component: {fileID: 1694313380}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1227,6 +1228,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _vignettePower: 10
   _vignetteMaterial: {fileID: 2100000, guid: 87c951e6574292743baedeaa4a6b0877, type: 2}
+--- !u!81 &1694313380
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1694313376}
+  m_Enabled: 1
 --- !u!1001 &1775376787
 Prefab:
   m_ObjectHideFlags: 0
@@ -1301,9 +1309,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07c5ec55e0d453648a6d63897cb4d004, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  posDebug0: {fileID: 0}
-  posDebug1: {fileID: 0}
-  posDebug2: {fileID: 0}
 --- !u!114 &1775376796
 MonoBehaviour:
   m_ObjectHideFlags: 0
