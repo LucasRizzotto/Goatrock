@@ -23,6 +23,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _Alpha: 0
     - _Glossiness: 0.933
     - _Metallic: 0
     - _mdpAmt: 0.05
@@ -39,6 +40,6 @@ Material:
     - _mdpSpeedColor: 1
     - _mdpTouchRadius: 1
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _mdpRippleColor: {r: 0, g: 1, b: 0.060104847, a: 1}
+    - _Color: {r: 1, g: 0, b: 0, a: 1}
+    - _mdpRippleColor: {r: 0.20301843, g: 1, b: 0, a: 1}
     - _mdpRippleHL: {r: 0, g: 1, b: 0, a: 0}
