@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.XR.MagicLeap;
 
 namespace GoatRock
@@ -10,8 +11,13 @@ namespace GoatRock
         public KeyCode ToggleMeshingDebugKey;
 
         [Space(10)]
-
+    
         public MLSpatialMapper SpatialMapper;
+
+        public class MeshManagerEvent : UnityEvent { }
+        [Space(10)]
+        public MeshManagerEvent OnStartMeshing;
+        public MeshManagerEvent OnStopMeshing;
 
         public delegate void StartMeshBuildingEvent();
         public static event StartMeshBuildingEvent OnMeshBuildingStart;
@@ -71,11 +77,13 @@ namespace GoatRock
         public void BuildMesh()
         {
             SpatialMapper.enabled = true;
+            OnStartMeshing.Invoke();
         }
 
         public void StopBuild()
         {
             SpatialMapper.enabled = false;
+            OnStopMeshing.Invoke();
         }
 
         #endregion
