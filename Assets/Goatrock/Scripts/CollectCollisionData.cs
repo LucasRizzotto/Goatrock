@@ -26,7 +26,7 @@ public class CollectCollisionData : MonoBehaviour {
 
     #region Main Methods
 
-    public void CollisionHandler(Collision collision)
+    public virtual void CollisionHandler(Collision collision)
     {
         Debug.Log("Collision detected on: " + collision.contacts[0].point.ToString());
         OnCollision.Invoke();

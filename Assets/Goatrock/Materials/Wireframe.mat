@@ -130,7 +130,7 @@ Material:
     - _Threshold: 1
     - _Transparency: 0.005
     - _UVSec: 0
-    - _WireThickness: 100
+    - _WireThickness: 300
     - _ZWrite: 1
     m_Colors:
     - _BackgroundColor: {r: 1, g: 1, b: 1, a: 1}
