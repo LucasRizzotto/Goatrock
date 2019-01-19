@@ -31,6 +31,7 @@ Material:
     - _mdpMicPitch: 1
     - _mdpMicVolume: 0
     - _mdpResAmt: 0.2
+    - _mdpResEmission: 4
     - _mdpResScale: 5
     - _mdpResSpeed: 1.5
     - _mdpRippleAmt: 0.09

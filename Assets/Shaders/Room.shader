@@ -24,6 +24,7 @@
 		_mdpResScale("_mdpResScale", Vector) = (1,1,1,1)
 		_mdpResColorLow("_mdpResColorLow", Color) = (1,1,1,1)
 		_mdpResColorHigh("_mdpResColorHigh", Color) = (1,1,1,1)
+		_mdpResEmission("_mdpResEmission", Float) = 1
 		// _Alpha("_Alpha", Float) = 1
 
 
@@ -98,6 +99,7 @@
 		fixed2 _mdpResScale;
 		fixed4 _mdpResColorLow;
 		fixed4 _mdpResColorHigh;
+		fixed _mdpResEmission;
 
 
 		// Add instancing support for this shader. You need to check 'Enable Instancing' on materials that use the shader.
@@ -259,8 +261,8 @@
 			fixed3 col = hsl2rgb( fixed3(IN.hl.y*_mdpSpeedColor, 1., .5));
 			//_mdpRippleColor.xyz
 
-			o.Emission.xyz = IN.hl.x * _mdpRippleEmission * col   + IN.hl.z * lerp(_mdpResColorLow, _mdpResColorHigh, _mdpMicVolume);
-			o.Albedo.xyz = IN.hl.xxx * col;//black room
+			o.Emission.xyz = IN.hl.x * _mdpRippleEmission * col   + IN.hl.z * _mdpResEmission * lerp(_mdpResColorLow, _mdpResColorHigh, _mdpMicVolume);
+			o.Albedo.xyz = IN.hl.xxx * col + IN.hl.z * lerp(_mdpResColorLow, _mdpResColorHigh, _mdpMicVolume);//black room
 			// o.Albedo.xyz =  lerp(o.Albedo, col , IN.hl.x);
 			// o.Alpha = IN.hl.x;// * _Alpha;
 			// o.Fade
