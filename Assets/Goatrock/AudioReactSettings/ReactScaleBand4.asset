@@ -9,11 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 316f4d81f00a3db499dff7c3e0cf4f77, type: 3}
-  m_Name: AudioReactDefaultScale
+  m_Name: ReactScaleBand4
   m_EditorClassIdentifier: 
   ScaleX: 1
   ScaleY: 1
   ScaleZ: 1
   BandNumber: 4
+  MinimumValue: 0
   IntensityMultiplier: 1
-  MaxScalePercentageIncrease: 0.1
+  MaxScalePercentageIncrease: 50

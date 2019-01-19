@@ -18,12 +18,34 @@ public class RecordClipsOnLoudness : MonoBehaviour {
     public AudioSource ThisAudioSource;
     public string MicrophoneName;
     [Space(5)]
-    public float AudioRecordingCooldown = 0.5f;
+    public bool RecordingEnabled = true;
+    public float MinimumAudioRecordingLength = 0.5f;
+    public float MinimumTimeBetweenRecordings = 0.1f;
+    [Space(5)]
+    [Header("Color Settings")]
+    public Color MinimumColor;
+    public Color MaximumColor;
+    [Space(5)]
+    public Vector2 ColorLowFrequencyRange;
+    public float ColorLowFrequencyRangeMultiplier;
+    [Space(5)]
+    public Vector2 ColorMediumFrequencyRange;
+    public float ColorMediumFrequencyRangeMultiplier;
+    [Space(5)]
+    public Vector2 ColorHighFrequencyRange;
+    public float ColorHighFrequencyRangeMultiplier;
+    [Space(5)]
+    public Vector2 ScaleRange;
+    [Space(5)]
+    public Color ColorOutput;
+    public float ScaleMultiplier;
 
     private float TimeSinceLastActivation;
+    private float TimeSinceLastRecordingEnd;
 
     private float SamplesOnRecordingStart;
     private float SamplesOnRecordingEnd;
+
     public bool IsRecording = false;
 
     #region Unity API
@@ -34,26 +56,45 @@ public class RecordClipsOnLoudness : MonoBehaviour {
         {
             ToggleRecording();
         }
+        
+        float red = Helpers.ConvertLinearRange(AudioReactMicSourceBehavior.Instance.FreqBand[2] * ColorLowFrequencyRangeMultiplier, ColorLowFrequencyRange.x, ColorLowFrequencyRange.y, MinimumColor.r, MaximumColor.r);
+        ColorOutput.r = red;
 
-        if(AudioReactMicSourceBehavior.Instance)
+        float green = Helpers.ConvertLinearRange(AudioReactMicSourceBehavior.Instance.FreqBand[3] * ColorMediumFrequencyRangeMultiplier, ColorLowFrequencyRange.x, ColorLowFrequencyRange.y, MinimumColor.g, MaximumColor.g);
+        ColorOutput.g = green;
+
+        float blue = Helpers.ConvertLinearRange(AudioReactMicSourceBehavior.Instance.FreqBand[4] * ColorHighFrequencyRangeMultiplier, ColorLowFrequencyRange.x, ColorLowFrequencyRange.y, MinimumColor.b, MaximumColor.b);
+        ColorOutput.b = blue;
+
+        // ColorOutput.g = Helpers.ConvertLinearRange(MinBand3, ColorMediumFrequencyRange.x, ColorMediumFrequencyRange.y, 0, 1f);
+        // ColorOutput.b = Helpers.ConvertLinearRange(MinBand4, ColorHighFrequencyRange.x, ColorHighFrequencyRange.y, 0, 1f);
+
+        if (AudioReactMicSourceBehavior.Instance)
         {
-            if (ShouldRecordingHappen())
+            if(RecordingEnabled)
             {
-                if (!IsRecording)
+                if (ShouldRecordingHappen())
                 {
-                    BeginCreatingAudioClip();
-                }
-                TimeSinceLastActivation = Time.time;
-            }
-            else
-            {
-                if (IsRecording)
-                {
-                    if (!ShouldRecordingHappen())
+                    if (!IsRecording)
                     {
-                        if (Time.time > AudioRecordingCooldown + TimeSinceLastActivation)
+                        if (Time.time > MinimumTimeBetweenRecordings + TimeSinceLastRecordingEnd)
                         {
-                            EndAudioClipCreation();
+                            BeginCreatingAudioClip();
+                        }
+                    }
+                    TimeSinceLastActivation = Time.time;
+                }
+                else
+                {
+                    if (IsRecording)
+                    {
+                        if (!ShouldRecordingHappen())
+                        {
+                            if (Time.time > MinimumAudioRecordingLength + TimeSinceLastActivation)
+                            {
+                                EndAudioClipCreation();
+                                TimeSinceLastRecordingEnd = Time.time;
+                            }
                         }
                     }
                 }
@@ -67,10 +108,7 @@ public class RecordClipsOnLoudness : MonoBehaviour {
 
     public bool ShouldRecordingHappen()
     {
-        if(AudioReactMicSourceBehavior.Instance.FreqBand[4] > MinBand4
-                || AudioReactMicSourceBehavior.Instance.FreqBand[3] > MinBand3
-                || AudioReactMicSourceBehavior.Instance.FreqBand[2] > MinBand2
-                || AudioReactMicSourceBehavior.Instance.FreqBand[5] > MinBand5)
+        if(AudioReactMicSourceBehavior.Instance.userIsTalking)
         {
             return true;
         }

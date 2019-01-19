@@ -52,11 +52,41 @@ namespace GoatRock
                 bandDataMultiplier = ReferenceAudioReactSource.GetBandData(Settings.BandNumber);
             }
 
-            ScaleTarget.localScale = new Vector3(
+
+            if (ReferenceAudioReactSourceMic != null)
+            {
+                bandDataMultiplier = ReferenceAudioReactSourceMic.GetBandData(Settings.BandNumber) / ReferenceAudioReactSourceMic.Amplitude;
+            }
+
+            // mic stuff
+
+            if (bandDataMultiplier > Settings.MinimumValue)
+            {
+                ScaleTarget.localScale = new Vector3(
                 ReturnTargetScale(Settings.ScaleX, initialScale.x, bandDataMultiplier, Settings.IntensityMultiplier, MaxScale),
                 ReturnTargetScale(Settings.ScaleY, initialScale.y, bandDataMultiplier, Settings.IntensityMultiplier, MaxScale),
                 ReturnTargetScale(Settings.ScaleZ, initialScale.z, bandDataMultiplier, Settings.IntensityMultiplier, MaxScale)
-            );
+                );
+            }
+            else
+            {
+                ScaleTarget.localScale = initialScale;
+            }
+
+            /*
+            if(bandDataMultiplier > Settings.MinimumValue)
+            {
+                ScaleTarget.localScale = new Vector3(
+                ReturnTargetScale(Settings.ScaleX, initialScale.x, bandDataMultiplier, Settings.IntensityMultiplier, MaxScale),
+                ReturnTargetScale(Settings.ScaleY, initialScale.y, bandDataMultiplier, Settings.IntensityMultiplier, MaxScale),
+                ReturnTargetScale(Settings.ScaleZ, initialScale.z, bandDataMultiplier, Settings.IntensityMultiplier, MaxScale)
+                );
+            }
+            else
+            {
+                ScaleTarget.localScale = initialScale;
+            }*/
+
         }
 
         float ReturnTargetScale(bool activeAxis, float initialScale, float bandMultiplier, float intensityMultiplier, float maxScale)
