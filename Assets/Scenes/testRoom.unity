@@ -323,6 +323,7 @@ MonoBehaviour:
   p1: {fileID: 1373320657}
   p2: {fileID: 1652445432}
   p3: {fileID: 1500787886}
+  micVolume: 0
 --- !u!1 &832438149 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: de45dfbf0b0476a488e17169582fc550, type: 3}
@@ -342,6 +343,7 @@ MonoBehaviour:
   p1: {fileID: 1373320657}
   p2: {fileID: 1652445432}
   p3: {fileID: 1500787886}
+  micVolume: 0
 --- !u!1 &1373320653
 GameObject:
   m_ObjectHideFlags: 0
