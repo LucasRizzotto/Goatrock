@@ -23,7 +23,10 @@ namespace GoatRock
                 ApplyForce(ThisRigidbody, DefaultDirection, DefaultForce);
             }
             
-            
+            if(CameraForward)
+            {
+                DefaultDirection = Camera.main.transform.forward;
+            }
         }
 
         private void Reset()
@@ -36,11 +39,6 @@ namespace GoatRock
         {
             if(ApplyContinuously)
             {
-                if (CameraForward)
-                {
-                    DefaultDirection = Camera.main.transform.forward;
-                }
-
                 ApplyForce(ThisRigidbody, DefaultDirection, DefaultForce * Time.deltaTime);
             }
         }

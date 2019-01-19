@@ -15,7 +15,6 @@ namespace GoatRock
         [Space(5)]
         [Range(0, 7f)]
         public int BandNumber = 2;
-        public float MinimumValue = 0;
         [Range(1f, 100f)]
         public float IntensityMultiplier = 20f;
         public float MaxScalePercentageIncrease = 0.2f;

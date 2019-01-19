@@ -63,30 +63,16 @@ namespace GoatRock
             {
                 try
                 {
-                    if(GetComponent<AudioReactSourceBehavior>() != null)
-                    {
-                        ReferenceAudioReactSource = GetComponent<AudioReactSourceBehavior>();
-                    }
-
-                    if(GetComponent<AudioReactMicSourceBehavior>() != null)
-                    {
-                        ReferenceAudioReactSourceMic = GetComponent<AudioReactMicSourceBehavior>();
-                    }
+                    ReferenceAudioReactSource = GetComponent<AudioReactSourceBehavior>();
+                    ReferenceAudioReactSourceMic = GetComponent<AudioReactMicSourceBehavior>();
                 }
                 catch
                 {
                     Debug.LogError("No Reference AudioReactSource set");
                 }
             }
-            if (GetComponent<AudioReactSourceBehavior>() != null)
-            {
-                ReferenceAudioReactSource = GetComponent<AudioReactSourceBehavior>();
-            }
-
-            if (GetComponent<AudioReactMicSourceBehavior>() != null)
-            {
-                ReferenceAudioReactSourceMic = GetComponent<AudioReactMicSourceBehavior>();
-            }
+            ReferenceAudioReactSource = GetComponent<AudioReactSourceBehavior>();
+            ReferenceAudioReactSourceMic = GetComponent<AudioReactMicSourceBehavior>();
         }
 
         /// <summary>

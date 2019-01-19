@@ -14,7 +14,6 @@ MonoBehaviour:
   ScaleX: 1
   ScaleY: 1
   ScaleZ: 1
-  BandNumber: 2
-  MinimumValue: 15
-  IntensityMultiplier: 30
-  MaxScalePercentageIncrease: 50
+  BandNumber: 4
+  IntensityMultiplier: 1
+  MaxScalePercentageIncrease: 0.1

@@ -76,6 +76,7 @@ GameObject:
   - component: {fileID: 82230375122924250}
   - component: {fileID: 114375576415284680}
   - component: {fileID: 114831346552768018}
+  - component: {fileID: 114220766737207518}
   m_Layer: 0
   m_Name: MeshingSampleBall
   m_TagString: Untagged
@@ -456,6 +457,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &114220766737207518
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1768872223544792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af804188ad380f24fac55f9a57308ef4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Distance: 1
 --- !u!114 &114375576415284680
 MonoBehaviour:
   m_ObjectHideFlags: 1

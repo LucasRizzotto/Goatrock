@@ -19,6 +19,7 @@ public class RecordClipsOnLoudness : MonoBehaviour {
     public string MicrophoneName;
     [Space(5)]
     public bool RecordingEnabled = true;
+    // public float MaximumAudioRecordingLength = 0.5f;
     public float MinimumAudioRecordingLength = 0.5f;
     public float MinimumTimeBetweenRecordings = 0.1f;
     [Space(5)]
@@ -52,10 +53,10 @@ public class RecordClipsOnLoudness : MonoBehaviour {
 
     private void Update()
     {
-        if (Input.GetKeyDown(ToggleRecordingDebug))
+        /*if (Input.GetKeyDown(ToggleRecordingDebug))
         {
             ToggleRecording();
-        }
+        }*/
         
         float red = Helpers.ConvertLinearRange(AudioReactMicSourceBehavior.Instance.FreqBand[2] * ColorLowFrequencyRangeMultiplier, ColorLowFrequencyRange.x, ColorLowFrequencyRange.y, MinimumColor.r, MaximumColor.r);
         ColorOutput.r = red;
@@ -80,21 +81,19 @@ public class RecordClipsOnLoudness : MonoBehaviour {
                         if (Time.time > MinimumTimeBetweenRecordings + TimeSinceLastRecordingEnd)
                         {
                             BeginCreatingAudioClip();
+                            TimeSinceLastActivation = Time.time;
                         }
                     }
-                    TimeSinceLastActivation = Time.time;
                 }
                 else
                 {
                     if (IsRecording)
                     {
-                        if (!ShouldRecordingHappen())
+                        if (Time.time > MinimumAudioRecordingLength + TimeSinceLastActivation)
                         {
-                            if (Time.time > MinimumAudioRecordingLength + TimeSinceLastActivation)
-                            {
-                                EndAudioClipCreation();
-                                TimeSinceLastRecordingEnd = Time.time;
-                            }
+                            EndAudioClipCreation();
+                            Debug.Log(":D");
+                            TimeSinceLastRecordingEnd = Time.time;
                         }
                     }
                 }
@@ -115,7 +114,7 @@ public class RecordClipsOnLoudness : MonoBehaviour {
         return false;
     }
 
-    public void ToggleRecording()
+    /*public void ToggleRecording()
     {
         if (IsRecording)
         {
@@ -125,17 +124,24 @@ public class RecordClipsOnLoudness : MonoBehaviour {
         {
             BeginCreatingAudioClip();
         }
-    }
+    }*/
 
     public void BeginCreatingAudioClip()
     {
-        Debug.Log("Began recording");
+        Debug.Log("Begin Creation Audio Clip");
         SamplesOnRecordingStart = Microphone.GetPosition(MicrophoneName);
         IsRecording = true;
     }
 
     public void EndAudioClipCreation()
     {
+        if(!IsRecording)
+        {
+            return;
+        }
+
+        Debug.Log("Ending Audio Clip");
+
         SamplesOnRecordingEnd = Microphone.GetPosition(MicrophoneName);
 
         Debug.Log("Recording sample size: " + ((int)SamplesOnRecordingEnd - (int)SamplesOnRecordingStart));

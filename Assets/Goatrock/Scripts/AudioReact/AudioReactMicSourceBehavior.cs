@@ -110,7 +110,7 @@ namespace GoatRock
 
         public IEnumerator RecalibrateMeans()
         {
-            while(true)
+            while (true)
             {
                 float TimeAtBeginning = Time.time;
                 float tempMean;
@@ -145,7 +145,7 @@ namespace GoatRock
                 userIsTalking = true;
                 OnTalkingStart.Invoke();
             }
-            if(sampledMean < noiseMean)
+            if (sampledMean < noiseMean)
             {
                 userIsTalking = false;
                 OnTalkingEnd.Invoke();
@@ -164,7 +164,7 @@ namespace GoatRock
         public float GetMean()
         {
             float Total = 0f;
-            for(int i = 0; i < Samples.Length; i++)
+            for (int i = 0; i < Samples.Length; i++)
             {
                 Total += Samples[i];
             }
@@ -287,6 +287,6 @@ namespace GoatRock
         }
 
         #endregion
-        
+
     }
 }

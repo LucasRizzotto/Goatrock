@@ -5,7 +5,8 @@ using UnityEngine;
 public class Eye : MonoBehaviour {
 
 	public Transform cam  ;
-	float velA;
+    public bool isRotating = false;
+    float velA;
 	// public bool extraShift = true;
 	public Vector3 shift = Vector3.zero;
 	public float setVel = -1f; 
@@ -29,21 +30,27 @@ public class Eye : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		Quaternion rot; //new rotation
-		rot =  Quaternion.LookRotation(cam.position, Vector3.up);
-		rot *= Quaternion.Euler(shift.x, shift.y, shift.z); // this adds a 90 degrees Y rotation
-		// if(extraShift) rot *= Quaternion.Euler(90, 0, 0); // this adds a 90 degrees Y rotation
-		// transform.rotation = rot; // this adds a 90 degrees Y rotation
+        float dT = Time.deltaTime;
 
-		var angle = Quaternion.Angle( transform.rotation, rot );
-		// var maxA = 10f;
+        if (isRotating) {
+            Quaternion rot; //new rotation
+            rot = Quaternion.LookRotation(cam.position, Vector3.up);
+            rot *= Quaternion.Euler(shift.x, shift.y, shift.z); // this adds a 90 degrees Y rotation
+                                                                // if(extraShift) rot *= Quaternion.Euler(90, 0, 0); // this adds a 90 degrees Y rotation
+                                                                // transform.rotation = rot; // this adds a 90 degrees Y rotation
 
-		
-		float dT = Time.deltaTime;
-		float dA = velA * dT; 
+            var angle = Quaternion.Angle(transform.rotation, rot);
+            // var maxA = 10f;
 
-		float dAr = dA/angle; //relative angle
-		transform.rotation = Quaternion.Slerp(transform.rotation, rot, dAr );
+
+
+            float dA = velA * dT;
+
+            float dAr = dA / angle; //relative angle
+            transform.rotation = Quaternion.Slerp(transform.rotation, rot, dAr);
+
+        }
+
 
 
 		if(isMoving){
