@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: RoomMagic
+  m_Name: RoomMagic 1
   m_Shader: {fileID: 4800000, guid: 021019b1ec8409c4195116b7281f359b, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -28,7 +28,6 @@ Material:
     - _Metallic: 0
     - _mdpAmt: 0.05
     - _mdpEdgeTickness: 0.05
-    - _mdpMicPitch: 1
     - _mdpMicVolume: 0
     - _mdpResAmt: 0.2
     - _mdpResScale: 5
@@ -45,11 +44,9 @@ Material:
     - _mdpSpeedColor: 1
     - _mdpTouchRadius: 1
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _mdpResAmt: {r: 0, g: 3, b: 1, a: 1}
-    - _mdpResColorHigh: {r: 1, g: 0, b: 0, a: 1}
-    - _mdpResColorLow: {r: 0.23066425, g: 0, b: 1, a: 1}
-    - _mdpResScale: {r: 4, g: 10, b: 1, a: 1}
-    - _mdpResSpeed: {r: 0.5, g: 0.5, b: 1, a: 1}
+    - _Color: {r: 1, g: 0, b: 0, a: 1}
+    - _mdpResAmt: {r: 0.2, g: 0.4, b: 1, a: 1}
+    - _mdpResScale: {r: 5, g: 15, b: 1, a: 1}
+    - _mdpResSpeed: {r: 1, g: 4, b: 1, a: 1}
     - _mdpRippleColor: {r: 0.20301843, g: 1, b: 0, a: 1}
     - _mdpRippleHL: {r: 0, g: 1, b: 0, a: 0}
