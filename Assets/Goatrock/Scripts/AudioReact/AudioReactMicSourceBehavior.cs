@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Events;
 
 namespace GoatRock
 {
@@ -24,16 +26,47 @@ namespace GoatRock
         public float[] AudioBand = new float[8];
         public float[] AudioBandBuffer = new float[8];
 
+        public float TimeBetweenMeans = 0.025f;
+        public float TimeBetweenCalculations = 0.3f;
+
+        //____________________MY ADDITIONS -- NOT POLISHED_______________________________________
+        public float averageMeans = 0;
+        private float grandtotalMeans = 0;
+        private int count = 0;
+
+        private float talkMean = 0.1f;
+        private float noiseMean = 0.03f;
+
+        [Serializable]
+        public class TalkingEvent : UnityEvent { }
+
+        public TalkingEvent OnTalkingStart;
+        public TalkingEvent OnTalkingEnd;
+
+        public bool userIsTalking = false;
+        //________________________________________________________________________________________
+
         private float TopAmplitude;
         private float[] decreaseBuffer = new float[8];
 
         private bool ActivateAudioReactSource = false;
 
+        private float MinMean;
+        private float MaxMean;
+
         #region Unity API
 
         public void Update()
         {
-            if(ActivateAudioReactSource)
+            //______________________________________________________________________________
+            //______________________________________________________________________________
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                ResetMean();
+            }
+
+            if (ActivateAudioReactSource)
             {
                 GetSpectrum();
                 GenerateBands();
@@ -41,6 +74,8 @@ namespace GoatRock
                 GetAmplitude();
                 GenerateAudioBands();
             }
+
+
         }
 
         /// <summary>
@@ -57,6 +92,7 @@ namespace GoatRock
                 ThisAudioSource.outputAudioMixerGroup = MixerGroupMicrophone;
                 ThisAudioSource.Play();
                 Debug.Log("Getting Mic Input Bois. Playing? " + ThisAudioSource.isPlaying);
+                StartCoroutine(RecalibrateMeans());
             }
 
 #else
@@ -67,6 +103,93 @@ namespace GoatRock
         #endregion
 
         #region Audio Data Collection
+
+        //______________________________________________________________________________
+
+        public float AverageMeanOfSection = 0f;
+
+        public IEnumerator RecalibrateMeans()
+        {
+            while (true)
+            {
+                float TimeAtBeginning = Time.time;
+                float tempMean;
+
+                grandtotalMeans = 0;
+                count = 0;
+                averageMeans = 0;
+
+                while (Time.time < TimeAtBeginning + TimeBetweenCalculations)
+                {
+                    tempMean = GetMean();
+                    grandtotalMeans += tempMean;
+                    count++;
+                    averageMeans = grandtotalMeans / count;
+
+                    yield return new WaitForSeconds(TimeBetweenMeans);
+                }
+
+                AverageMeanOfSection = grandtotalMeans / count;
+
+                Debug.Log("Finished Time Between Means");
+                DetectTalking();
+            }
+        }
+
+        public void DetectTalking()
+        {
+            float sampledMean = AverageMeanOfSection;
+
+            if (sampledMean > talkMean)
+            {
+                userIsTalking = true;
+                OnTalkingStart.Invoke();
+            }
+            if (sampledMean < noiseMean)
+            {
+                userIsTalking = false;
+                OnTalkingEnd.Invoke();
+            }
+
+        }
+        //______________________________________________________________________________
+
+
+        public void ResetMean()
+        {
+            MinMean = -1f;
+            MaxMean = -1f;
+        }
+
+        public float GetMean()
+        {
+            float Total = 0f;
+            for (int i = 0; i < Samples.Length; i++)
+            {
+                Total += Samples[i];
+            }
+
+            float Mean = (Total / Samples.Length) * 200f;
+
+            if (Mean > MaxMean)
+            {
+                MaxMean = Mean;
+                Debug.Log("New MAX Mean: " + MaxMean);
+            }
+
+            if (MinMean <= 0)
+            {
+                MinMean = Mean;
+            }
+
+            if (Mean < MinMean)
+            {
+                MinMean = Mean;
+                Debug.Log("New MIN " + MinMean);
+            }
+
+            return Mean;
+        }
 
         private void GetSpectrum()
         {
@@ -164,6 +287,6 @@ namespace GoatRock
         }
 
         #endregion
-        
+
     }
 }

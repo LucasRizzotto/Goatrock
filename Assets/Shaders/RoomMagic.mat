@@ -50,7 +50,7 @@ Material:
     - _mdpResAmt: {r: 0, g: 3, b: 1, a: 1}
     - _mdpResColorHigh: {r: 1, g: 0, b: 0, a: 1}
     - _mdpResColorLow: {r: 0.23066425, g: 0, b: 1, a: 1}
-    - _mdpResScale: {r: 4, g: 10, b: 1, a: 1}
+    - _mdpResScale: {r: 1, g: 1, b: 1, a: 1}
     - _mdpResSpeed: {r: 0.5, g: 0.5, b: 1, a: 1}
     - _mdpRippleColor: {r: 0.20301843, g: 1, b: 0, a: 1}
     - _mdpRippleHL: {r: 0, g: 1, b: 0, a: 0}

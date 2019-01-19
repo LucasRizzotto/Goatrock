@@ -29,10 +29,6 @@ public class PlaybackMicrophone : MonoBehaviour {
             Debug.Log("Getting Mic Input Bois. Playing? " + ThisAudioSource.isPlaying);
         }
     }
-    
-
 
     #endregion
-
-
 }
