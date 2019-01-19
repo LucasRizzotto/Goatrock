@@ -1,22 +1,32 @@
-﻿using System.Collections;
+﻿using GoatRock;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class RecordClipsOnLoudness : MonoBehaviour {
 
+    public float MinBand5;
     public float MinBand4;
     public float MinBand3;
+    public float MinBand2;
     [Space(5)]
-    public AudioClip CreatedAudioClip;
+    public GameObject RecordedObjectPrefab;
+    [Space(5)]
     public KeyCode ToggleRecordingDebug = KeyCode.R;
+    public AudioClip CreatedAudioClip;
+    [Space(5)]
     public AudioSource ThisAudioSource;
-    public float MaxClipLength;
     public string MicrophoneName;
-    [Space(10)]
-    public float SamplesOnRecordingStart;
-    public float SamplesOnRecordingEnd;
+    [Space(5)]
+    public float AudioRecordingCooldown = 0.5f;
 
-    private bool IsRecording = false;
+    private float TimeSinceLastActivation;
+
+    private float SamplesOnRecordingStart;
+    private float SamplesOnRecordingEnd;
+    public bool IsRecording = false;
+
+    #region Unity API
 
     private void Update()
     {
@@ -24,10 +34,48 @@ public class RecordClipsOnLoudness : MonoBehaviour {
         {
             ToggleRecording();
         }
+
+        if(AudioReactMicSourceBehavior.Instance)
+        {
+            if (ShouldRecordingHappen())
+            {
+                if (!IsRecording)
+                {
+                    BeginCreatingAudioClip();
+                }
+                TimeSinceLastActivation = Time.time;
+            }
+            else
+            {
+                if (IsRecording)
+                {
+                    if (!ShouldRecordingHappen())
+                    {
+                        if (Time.time > AudioRecordingCooldown + TimeSinceLastActivation)
+                        {
+                            EndAudioClipCreation();
+                        }
+                    }
+                }
+            }
+        }
     }
+
+    #endregion
 
     #region Recording Methods
 
+    public bool ShouldRecordingHappen()
+    {
+        if(AudioReactMicSourceBehavior.Instance.FreqBand[4] > MinBand4
+                || AudioReactMicSourceBehavior.Instance.FreqBand[3] > MinBand3
+                || AudioReactMicSourceBehavior.Instance.FreqBand[2] > MinBand2
+                || AudioReactMicSourceBehavior.Instance.FreqBand[5] > MinBand5)
+        {
+            return true;
+        }
+        return false;
+    }
 
     public void ToggleRecording()
     {
@@ -62,7 +110,8 @@ public class RecordClipsOnLoudness : MonoBehaviour {
         newClip.SetData(samples, 0);
         CreatedAudioClip = newClip;
 
-        var newAudioSource = gameObject.AddComponent<AudioSource>();
+        var AudioClipGameObject = Instantiate(RecordedObjectPrefab, Camera.main.transform.position, Quaternion.identity);
+        var newAudioSource = AudioClipGameObject.GetComponent<AudioSource>();
         newAudioSource.clip = newClip;
         newAudioSource.playOnAwake = true;
         newAudioSource.loop = true;
@@ -70,7 +119,7 @@ public class RecordClipsOnLoudness : MonoBehaviour {
 
         IsRecording = false;
     }
-
+    
     #endregion
 
 }

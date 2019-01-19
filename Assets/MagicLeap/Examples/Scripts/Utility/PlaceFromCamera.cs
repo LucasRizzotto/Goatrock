@@ -21,9 +21,13 @@ namespace MagicLeap
     /// </summary>
     public class PlaceFromCamera : MonoBehaviour
     {
+
+
         #region Private Variables
         [SerializeField, Tooltip("The distance from the camera through its forward vector.")]
         private float _distance = 0.0f;
+
+        public bool CameraHeight = false;
 
         [SerializeField, Tooltip("The distance on the Y axis from the camera.")]
         private float _height = 0.0f;
@@ -100,7 +104,18 @@ namespace MagicLeap
             Camera camera = Camera.main;
 
             // Move the object CanvasDistance units in front of the camera.
-            Vector3 upVector = new Vector3(0.0f, _height, 0.0f);
+
+            Vector3 upVector = Vector3.zero;
+
+            if (CameraHeight)
+            {
+                upVector = new Vector3(0.0f, Camera.main.transform.position.y, 0.0f);
+            }
+            else
+            {
+                upVector = new Vector3(0.0f, _height, 0.0f);
+            }
+            
             Vector3 targetPosition = camera.transform.position + upVector + (camera.transform.forward * _distance);
             transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref _positionVelocity, _positionSmoothTime);
 

@@ -6,7 +6,7 @@ using UnityEngine.Audio;
 
 namespace GoatRock
 {
-    public class AudioReactMicSourceBehavior : MonoBehaviour
+    public class AudioReactMicSourceBehavior : Singleton<AudioReactMicSourceBehavior>
     {
         public bool ReactToMicrophoneInput = true;
         [Space(10)]
