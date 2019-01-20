@@ -28,7 +28,9 @@ Material:
     - _Metallic: 0
     - _mdpAmt: 0.05
     - _mdpEdgeTickness: 0.05
+    - _mdpMicMult: 1
     - _mdpMicPitch: 1
+    - _mdpMicPow: 1
     - _mdpMicVolume: 0
     - _mdpResAmt: 0.2
     - _mdpResEmission: 4

@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class RoomMagic : MonoBehaviour {
 
-	public static int colIdx = 0;
-    public static int colMax = 3;
-    public static float[] colStart;// = 10000;
-    public static Vector3[] colCenter;// = Vector3.zero;
+	public  int colIdx = 0;
+    public  int colMax = 3;
+    public  float[] colStart;// = 10000;
+    public  Vector3[] colCenter;// = Vector3.zero;
 
     public bool isDebugPositions = true;
     public Transform p1;
@@ -46,7 +46,7 @@ public class RoomMagic : MonoBehaviour {
 
 
 	// public float[] colSpeed = 1;
-	public static void OnCollision(Vector3 pos){
+	public  void OnCollision(Vector3 pos){
 
 		colStart[colIdx] = Time.time;
 		colCenter[colIdx] = pos;

@@ -18,6 +18,8 @@
 
 		[Space][Header(Resonate)]
 		_mdpMicVolume("_mdpMicVolume", Range(0,1)) = 1
+		_mdpMicPow("_mdpMicPow", Float) = 1
+		_mdpMicMult("_mdpMicMult", Float) = 1
 		// _mdpMicPitch("_mdpMicPitch", Range(0,1)) = 1
 		_mdpResAmt("_mdpResAmt", Vector) = (1,1,1,1)
 		_mdpResSpeed("_mdpResSpeed", Vector) = (1,1,1,1)
@@ -61,7 +63,7 @@
 		struct Input {
          float2 uv_MainTex;
 
-		  	fixed3 hl;
+		  	fixed4 hl;
 		};
 
 		half _Glossiness;
@@ -93,6 +95,8 @@
 		fixed4 _mdpRippleEmission;
 
 		fixed _mdpMicVolume;
+		fixed _mdpMicPow;
+		fixed _mdpMicMult;
 		// fixed _mdpMicPitch;
 		fixed2 _mdpResAmt;
 		fixed2 _mdpResSpeed;
@@ -148,7 +152,7 @@
 		
 		fixed easeInOutQuad (fixed t) { return t<.5 ? 2*t*t : -1+(4-2*t)*t; }
 
-		float rippleTouchOffset(float3 startPos, float3 t, float3 wp, inout fixed3 fhl){ //, out float hl
+		float rippleTouchOffset(float3 startPos, float3 t, float3 wp, inout fixed4 fhl){ //, out float hl
 
 			fixed dist = t * _mdpSpeed;
 			fixed l_edge = dist; //dist to edge
@@ -173,12 +177,14 @@
 
 		}
 
-		float3 mdpRipple(float3 wp,  float3 pt, inout float3 pn, inout fixed3 hl){
+		float3 mdpRipple(float3 wp,  float3 pt, inout float3 pn, inout fixed4 hl){
 
 
-			fixed mdpResAmt = lerp(_mdpResAmt.x, _mdpResAmt.y, _mdpMicVolume);
-			fixed invScale = 1./lerp(_mdpResScale.x, _mdpResScale.y, _mdpMicVolume);
-			fixed mdpResSpeed = lerp(_mdpResSpeed.x, _mdpResSpeed.y, _mdpMicVolume);
+
+
+			fixed mdpResAmt = lerp(_mdpResAmt.x, _mdpResAmt.y, hl.w);
+			fixed invScale = 1./lerp(_mdpResScale.x, _mdpResScale.y, hl.w);
+			fixed mdpResSpeed = lerp(_mdpResSpeed.x, _mdpResSpeed.y, hl.w);
 
 			wp /= invScale;
 
@@ -194,7 +200,7 @@
 			
 			// off = (2.*off-1.); 
 			float m = dot(dir, pn);
-			hl.z += off*off *m* _mdpMicVolume;//*m; 
+			hl.z += off*off *m* hl.w;//*m; 
 			off = 2.*(off-float(.5).xxx);//[-1,1]
 			wp.xyz += off * dir *  mdpResAmt;
 
@@ -233,6 +239,7 @@
 
 			UNITY_INITIALIZE_OUTPUT(Input, o);
 			o.hl = 0;
+			o.hl.w = pow(_mdpMicVolume, _mdpMicPow)*_mdpMicMult;
 
 			fixed4 wp =  mul(unity_ObjectToWorld, v.vertex); //world space point unscaled
 			float3 wn =  mul(unity_ObjectToWorld, v.normal);
@@ -261,8 +268,9 @@
 			fixed3 col = hsl2rgb( fixed3(IN.hl.y*_mdpSpeedColor, 1., .5));
 			//_mdpRippleColor.xyz
 
-			o.Emission.xyz = IN.hl.x * _mdpRippleEmission * col   + IN.hl.z * _mdpResEmission * lerp(_mdpResColorLow, _mdpResColorHigh, _mdpMicVolume);
-			o.Albedo.xyz = IN.hl.xxx * col + IN.hl.z * lerp(_mdpResColorLow, _mdpResColorHigh, _mdpMicVolume);//black room
+			o.Emission.xyz = IN.hl.x * _mdpRippleEmission * col   + IN.hl.z * _mdpResEmission * lerp(_mdpResColorLow, _mdpResColorHigh, IN.hl.w);
+			o.Albedo.xyz = IN.hl.xxx * col + IN.hl.z * lerp(_mdpResColorLow, _mdpResColorHigh, IN.hl.w);//black room
+			
 			// o.Albedo.xyz =  lerp(o.Albedo, col , IN.hl.x);
 			// o.Alpha = IN.hl.x;// * _Alpha;
 			// o.Fade
