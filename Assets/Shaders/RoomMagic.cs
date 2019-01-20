@@ -15,8 +15,8 @@ public class RoomMagic : MonoBehaviour {
     public Transform p2;
     public Transform p3;
 
-    [Range(0,1)]
-    public float micVolume;
+    [HideInInspector]
+    [Range(0,1)] public float micVolume;
 
 	// Use this for initialization
 	void Start () {
@@ -39,7 +39,7 @@ public class RoomMagic : MonoBehaviour {
 		Shader.SetGlobalFloat("_mdpColTime1", Time.time - colStart[0] );
 		Shader.SetGlobalFloat("_mdpColTime2", Time.time - colStart[1] );
 		Shader.SetGlobalFloat("_mdpColTime3", Time.time - colStart[2] );
-		Shader.SetGlobalFloat("_mdpMicVolume", micVolume );
+		// Shader.SetGlobalFloat("_mdpMicVolume", micVolume );
 		// float _mdpTime = ( Time.time - colStart ) ;
 
 	}

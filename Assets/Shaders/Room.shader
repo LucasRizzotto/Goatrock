@@ -17,8 +17,8 @@
 		_mdpRippleEmission("_mdpRippleEmission", Float) = 1
 
 		[Space][Header(Resonate)]
-		// _mdpMicVolume("_mdpMicVolume", Range(0,1)) = 1
-		_mdpMicPitch("_mdpMicPitch", Range(0,1)) = 1
+		_mdpMicVolume("_mdpMicVolume", Range(0,1)) = 1
+		// _mdpMicPitch("_mdpMicPitch", Range(0,1)) = 1
 		_mdpResAmt("_mdpResAmt", Vector) = (1,1,1,1)
 		_mdpResSpeed("_mdpResSpeed", Vector) = (1,1,1,1)
 		_mdpResScale("_mdpResScale", Vector) = (1,1,1,1)
@@ -93,7 +93,7 @@
 		fixed4 _mdpRippleEmission;
 
 		fixed _mdpMicVolume;
-		fixed _mdpMicPitch;
+		// fixed _mdpMicPitch;
 		fixed2 _mdpResAmt;
 		fixed2 _mdpResSpeed;
 		fixed2 _mdpResScale;
