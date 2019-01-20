@@ -35,7 +35,7 @@ Material:
     - _mdpResScale: 5
     - _mdpResSpeed: 1.5
     - _mdpRippleAmt: 0.09
-    - _mdpRippleEmission: 5
+    - _mdpRippleEmission: 5.32
     - _mdpRippleFreq: 50
     - _mdpRippleHLPow: 1
     - _mdpRippleMult: 1
@@ -48,7 +48,7 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _mdpResAmt: {r: 0, g: 3, b: 1, a: 1}
-    - _mdpResColorHigh: {r: 0, g: 1, b: 0.70228624, a: 1}
+    - _mdpResColorHigh: {r: 1, g: 0.07817807, b: 0, a: 1}
     - _mdpResColorLow: {r: 0.23137236, g: 0, b: 1, a: 1}
     - _mdpResScale: {r: 4, g: 10, b: 1, a: 1}
     - _mdpResSpeed: {r: 0.5, g: 0.5, b: 1, a: 1}
